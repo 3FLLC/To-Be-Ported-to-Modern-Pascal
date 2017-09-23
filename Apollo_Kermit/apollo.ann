@@ -1,0 +1,60 @@
+Subject: apxv29.ann
+Date: Tue, 30 May 89 11:36:31 WET DST
+From: The National PD Software Archive
+      <pdsoft%pd-software.lancaster.ac.uk@nsfnet-relay.ac.uk>
+
+Version 2.9 of the alternative Apollo Pascal Kermit (APX).
+----------------------------------------------------------
+
+The principal change between versions 2.7 and 2.9 of Apollo APX Kermit is to
+add in the 8 bit quoting and associated file handling changes from APO
+Kermit versions 2.8 and 2.8a.  In the parameters exchange, APX 2.9 also
+handles 'Y' and 'N' in the 8-bit field from the other Kermit correctly.
+Also there is now SET 8BIT ON/OFF (if ON, it sends '&' which, according to
+the protocol manual, means "I insist on quoting" ; if OFF, it sends 'N'
+which means "I can't").
+
+I believe that the APX Kermit can now do everything that the APO version
+does (and more).
+
+The extensions are:
+
+APX can be run on a remote node, even (crudely) from an attached terminal on
+the local node.
+
+            Repeat count processing.
+            Filename normalising.
+            RECEIVE followed by filename.
+            SET TIME and TIMEOUT.
+
+Other changes between 2.7 and 2.9.
+
+CVT_NL is now called RAW (i.e. CVT_NL OFF now RAW ON).
+
+This version works out how is is being driven and sets GRAPHICS and RAW
+accordingly.  As before, if it is being driven by an sio line it assumes it
+is running as a remote Kermit, so you can't use it as it stands to drive one
+sio on a node from another.
+
+If it is running on a remote node, CONNECT now works in RAW mode.  This
+means you no longer get a double echo and echoing of passwords and you
+can send control characters.  However, if you are using an attached
+terminal on the local node, this doesn't work and you must explicitly
+SET RAW OFF before CONNECTing.  If normalising, received file names are
+converted to lower case.  Now handles prefixing in incoming fileheader
+packets and does control quoting in outgoing ones. 
+
+To avoid confusion, this version announces itself as Apollo-APX.  Minor code
+changes to stop the Pascal optimiser generating warnings.
+
+This version works under Aegis SR 9.7.  I don't know whether it works under
+SR10 - but it will have to be made to eventually.
+
+            Gordon Sands,
+            Technical Computing Dept.,
+            Marconi Space Systems Ltd.,
+            Anchorage Rd.,
+            Portsmouth,
+            PO3 5PU.
+            0705-664966 x3521
+
