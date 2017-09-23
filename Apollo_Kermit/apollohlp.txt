@@ -1,0 +1,175 @@
+                Kermit Version 2.9 to run on the Apollo System
+                ==============================================
+
+     The following commands are implemented in the current version of Kermit
+     running on the Apollo :
+
+        Command                        Description
+     ------------- --------------------------------------------------------
+     CONNECT (C)   Establish a terminal connection to the system at the
+                   other end of the communication line.
+
+     EXIT    (E)   Exits the Kermit program.  Reset the I/O lines to their
+                   original settings before Kermit was executed.
+
+     FINISH  (F)   When running as a local Kermit talking to a remote
+                   Kermit server use the FINISH command to shut down the
+                   server without logging out the remote job, so that you
+                   can CONNECT back to it.
+
+     GET     (G)   Requests a remote Kermit server to send the file or
+                   file group specified.
+
+     HELP    (H)   Gives a brief list of commands and their function
+                   (typing command-name ? gives further details).
+
+     LOCAL   (LOC) Executes the specified command on the Apollo.  This
+                   command is intended to provide local file management
+                   capabilities without having to leave the Kermit
+                   program.  Extreme caution must be used if attempting
+                   to execute programs, especially those outside of the
+                   current working directory.  When executing commands, if
+                   the command is not a system command, then a relative
+                   pathname must be given.  The command search rules will
+                   not be followed.
+
+     LOG           Log the specified entity to the specified log file.
+
+     QUIT    (Q)   Same as Exit.
+
+     RECEIVE (R)   Wait for the arrival of a file or file group sent by a
+                   Send command from the connected Kermit.
+
+     SEND    (SEN) Sends the specified file to the connected Kermit.
+
+     SERVER  (SER) Places Kermit into server mode.  In server mode, Kermit
+                   does not interact directly with the user, but only with
+                   the connected Kermit program.
+
+     SET     (SET) Establishes or modifies various parameters for file
+                   transfer.
+
+     SHOW    (SH)  Displays the values of the parameters settable by the
+                   SET command.
+
+     STATISTICS    Give statistics about the most recent file transfer.
+
+     TAKE    (T)   Executes Kermit commands from the specified file.  The
+                   file may contain any valid Kermit commands, including
+                   other Take commands.
+
+     TRANSMIT      Send the contents of the specified file to the other
+                   system "bare", without protocol, packets, error
+                   checking, or retransmission.
+
+     After each command is listed, in parentheses, an abbreviation for the
+     command.  For example, to place Kermit into server mode one can enter
+     'Server' as the specified command, or they may abbreviate the command
+     to 'Ser'.
+
+     The set command recognizes the following parameters :
+
+         BAUD-RATE : Sets the baud-rate to 110, 300, 1200, 4800, 9600, or
+                     19200.
+
+         DEBUG     : Turns the debug mode on or off.  In debug mode a file
+                     is created in the current working directory.  In that
+                     file is maintained a log of all packets which are
+                     sent and received along with any state changes that
+                     might take place.  Default is off.
+
+         DELAY     : Sets the number of seconds to wait before sending the
+                     specified file with a SEND command.  The unit of time
+                     is in seconds and must be non-negative.
+                     Default is 15.
+
+         ESCAPE    : Sets the character used to escape from CONNECT mode. If
+                     GRAPHICS is on, can be any ASCII character (except
+                     space). IF GRAPHICS off, must be printable. 
+                     Default is ctrl] if graphics on or ! if off.
+
+         ECHO      : Turns the local echo (when in CONNECT mode) on or off.
+                     Default is off.
+
+         FILE_TYPE : Sets the type of transmission to handle text or binary
+                     files.  If the file type is ascii then only seven
+                     bits of each 8-bit data character is used.  If the
+                     file type is binary then the full eight bits are used.
+                     Default is ascii.
+
+         LINE      : Specifies which line to use when running Kermit as a
+                     local Kermit.  Can be 1,2 or 3.
+
+         NAKS      : Turns on or off the sending of periodic NAK's while in
+                     server mode.  If this mode is on then approximately
+                     every fifteen seconds a NAK is sent to the connected
+                     Kermit if no input is received within that time
+                     period.  If this mode is off, then there are no NAK's
+                     sent on such timeouts.  If the connected Kermit is not
+                     capable of clearing its input buffer before beginning
+                     the receive file sequence, then this mode should be
+                     turned off.  Default is off.
+
+         NORMAL    : If on, names of files sent are converted into a
+                     "normal" form before being sent to the connected Kermit
+                     and received names are converted into legal Apollo
+                     names. If off,no conversion is done. Default is on.
+
+         PARITY    : Sets the parity to ODD, EVEN, or NONE.
+
+         RETRY     : Specifies the number of times a packet should be
+                     resent before a transaction should be aborted.
+                     Default is 5.
+
+         TIME      : The number of seconds that the connected Kermit is to
+                     wait before timing this one out. Must be non-negative.
+                     Default is 15.
+
+         TIMEOUT   : The number of seconds that this Kermit is to wait
+                     before timing the connected one out. Must be
+                     non-negative. This value may be altered when the two
+                     Kermits exchange parameters.
+                     Default is 60.
+
+         GRAPHICS  : Turns graphics mode on or off. Normally, if you are
+                     running KERMIT locally on a normal Apollo display node,
+                     KERMIT uses Graphics Primitives to drive the whole screen
+                     when CONNECTed or transferring files. These do not work on
+                     an attached dumb terminal or on a remote node. If
+                     GRAPHICS is switched off, a cruder driver is used. 
+                     Not relevant if running as a host.
+                     Default is on if you are on a display node, off otherwise.
+
+         RAW       : When CONNECTed, runs screen/line in "raw" mode, i.e. 
+                     keystrokes are sent unaltered. If off, works in "cooked"
+                     mode, i.e translates Apollo's line terminator (line feed)
+                     to the more usual carriage-return. Also filters out most
+                     control characters and allows use of backspace, again etc
+                     buttons.  Needs to be OFF if you are driving KERMIT on
+                     one node from a dumb terminal on another node, or if you
+                     switch graphics off.  Not relevant if running as a host.
+                     Default on.
+
+         8BIT      : "8 bit quoting" is the method KERMIT uses to send data 
+                     which uses all 8 bits on a line where the 8th bit is used
+                     for parity.  If 8BIT is on, this KERMIT insists on using
+                     quoting. This may cause the other end to abort the
+                     transfer. If you are only transferring ASCII text, there
+                     is no harm in switching it off.  Default is on.
+
+         Examples  :
+                     SET BAUD-RATE 1200       {Sets baud-rate to 1200}
+                     SET DEBUG OFF            {Turn debug mode off}
+                     SET DEBUG ON             {Turn debug mode on}
+                     SET NAKS OFF             {Do not send periodic NAK's}
+                     SET NAKS ON              {Send periodic NAK's}
+                     SET PARITY EVEN          {Sets parity to even}
+
+     An Apollo process can only drive RS232 ports on its own node. To access
+     a port on another node it must be running a Server_Process_Manager. You 
+     can then create a remote process on that node by typing:
+       CRP -ON nnnn -ME
+     Then you can run Kermit on that node. A system manager can make this
+     transparent to users by setting /COM/KERMIT on the remote nodes to:
+
+     crp '/com/sh -c //node_nnnn/com/kermit' -on nnnn -me
