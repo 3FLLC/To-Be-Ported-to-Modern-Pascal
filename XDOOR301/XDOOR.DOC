@@ -1,0 +1,626 @@
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+            Xtreme Doorkit v3.00  -  by Nate Case [nd@kracked.com]
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+
+              Porting to Win32 and Door32 support coded by g00r00
+                           [mysticbbs@geocities.com]
+
+                 EleCOM communication engine by Maarten Bekers
+
+                          a Demonic BBS Production
+
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+   Information
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+
+   Xtreme Doorkit (xdoor) is a door driver kit  for Turbo Pascal 7.0 or
+   Virtual Pascal 2.0.  If you don't have these version, then you should
+   really upgrade to these versions.
+
+   XDoor was designed to let Pascal programmers (experienced and
+   inexperienced) create and develop BBS doors.  It was  created  to be a
+   very simple tool to be used, but also very capable and advanced.  Plus
+   for even further development capabilities,  I included the FULL source
+   code to XDoor.  Feel free  to modify it in anyway you can for your own
+   personal use.
+
+   As of version 3.00, it should now compile and function under Virtual
+   Pascal v2.0 for both Windows and OS/2.  Door32 support has also been
+   added for the native Windows and OS/2 compiles.  For more information
+   on Door32, see the web page at: http://www.mysticbbs.com/door32
+
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+   Features
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+
+   ş  Full Fossil Driver support (this means it will work with telnet
+      BBS's that use a virtual modem telnet daemon) (DOS version ONLY)
+   ş  Full Door32 support for Windows and OS/2 versions.  This allows
+      the doors to work over both dialup and telnet connections without
+      a virtual modem driver like NetModem or COM/IP.
+   ş  Completely cross-platform.  If you have the required compilers, you
+      can compile native DOS, Windows, and OS/2 versions of your door from
+      the same source code!
+   ş  Built in ANSI/Avatar driver (you don't need ANSI.SYS loaded)
+   ş  Time slicing for Dos, Windows, OS/2, Desqview, Doubledos, and Netware.
+   ş  Support for DOOR.SYS, DORINFO#.DEF, VIVID#.SYS, and DOOR32.SYS dropfiles
+   ş  A nice, clean look
+   ş  A simple 4-line config file (no 30 line .CTL files :) )
+   ş  Support for ALL com ports and IRQ's
+   ş  FULL source code included for ultimate customization
+   ş  Your doors will run on virtually ANY BBS Software
+   ş  Xtreme Doorkit will continuously be updated and supported
+   ş  And best of all, it's free! :)
+
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+   Installation
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+
+   1)  Starting with version 3.00, xdoor no longer comes with precompiled
+       units.  This is because it supports three different platforms and
+       distributing the units for all three, AND the source code is a little
+       rediculous.
+
+   2)  Unzip the SOURCE.ZIP file included in the archive into a directory.
+
+   3)  Now, you can either keep the source in that directory and create your
+       door in that directory, or you can move the source into your
+       COMMON directory of your compiler and it will be accessible from any
+       directory:
+
+          1. Move all .PAS files into your UNITS directory.  This is
+             usually something like C:\TP\UNITS.
+
+   Now you can begin creating online doors! (See below)
+
+
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+   Creating doors
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+
+   To get started creating your own doors in Pascal, first, you need to
+   add this line in your "Uses" statement;
+
+   Uses XDoor;  { Plus any other additional units you wish to use }
+
+   Then, simply call "InitDoor;" in the near front of your program.
+   Before calling "InitDoor;", it's a good idea to change any default
+   string/integer values with XDoor.  (see variables section)
+
+   example:
+
+   Uses XDoor;
+
+   Begin
+     CfgName  := 'MYDOOR.CFG';
+     DoorName := 'Elf Door';
+     InitDoor;
+     { your door programming }
+   End.
+
+   Note:  All XDoor configurable variables will be discussed later.
+
+
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+   Configuration file
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+
+   Xtreme Doorkit will attempt to read in a .CFG file when a call to
+   "InitDoor;" has been made.  A sample  .CFG file  ("DOOR.CFG") has
+   been included.  The .CFG file syntax is as follows:
+
+   [Line 1]  Drop File Type: 1 = VIVID#.SYS, 2 = DORINFO#.DEF, 3 = DOOR.SYS
+   [Line 2]  Path to BBS drop file (just the path, not the file)
+   [Line 3]  Sysop Name
+   [Line 4]  Your BBS Name
+
+   Note: Lines beyond the 4 required configuration lines are ignored
+
+   Also, you are not limited to just 4 configuration lines;  if you want,
+   you could EASILY modify the source to read in an extra line or so, for
+   your own door's use.  If you need help with this,  see "Contacting" at
+   the end of this document.
+
+
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+   Xtreme Doorkit Output Procedures/Functions
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+
+
+   out(s: String);
+     Sends a raw string to remote AND local end
+
+   outln(s: String);
+     Sends a raw string to remote AND local ends, goes to next line
+
+   cOut(s: String);
+     Writes a string locally/remotely, parsing pipe color codes
+
+   cOutln(s: String);
+     Writes a string locally/remotely, parsing pipe codes, with cr/lf
+   
+   rOut(s: String);
+     Send a string to remote screen only
+
+   rOutln(s: String);
+     Send a string to remote screen only, plus cr/lf
+
+   lOut(s: String);
+     Send a string to local side only, parsing ansi codes
+
+   lOutln(S: String);
+     Send a string to local side only [+ansi], with cr/lf
+   
+   nl;
+     Goes to next line on screen (just writes cr and linefeed)
+
+   fg(col: Byte);
+     Sets local and remote foreground textcolors
+
+   bg(col: Byte);
+     Sets local and remote background textcolors
+
+   color(fg, bg: Byte);
+     Sets both foreground AND background colors at once
+
+   saveCursor;
+     Stores cursor position in memory for next restoreCursor call
+
+   restoreCursor;
+     Restore cursor position saved previously by saveCursor
+
+   posUp(b: Byte);
+     Move cursor up specified number of times
+
+   posDown(b: Byte);
+     Move cursor down specified number of times
+
+   posLeft(b: Byte);
+     Move cursor left specified number of times
+
+   posRight(b: Byte);
+     Move cursor right specified number of times
+
+   setPosX(b: Byte);
+     Moves cursor to specified column, not changing rows
+
+   setPosY(b: Byte);
+     Moves cursor to specified row, not changing columns
+
+   cGotoXY(x,y: Byte);
+     Sets cursor position to specified coordinates
+
+   cClrScr;
+     Clears remote and local screens
+
+   cClrEol;
+     Clears line from cursor position to the end of the line
+
+   showFile(fname: string; more: boolean);
+     Display a textfile/ansi screen to local and remote screens.
+
+         fname   : File name to display;  if no extension is given, a
+                   file extension of ".ANS" is assumed.
+         more    : If set to true, XDoor will pause every 23 lines with
+                   a "More?" prompt.  See variables section for changing
+                   this string.
+
+         note    : This file *CAN* contain PIPE color codes, and showfile 
+                   will parse them.
+
+
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+   Xtreme Doorkit Input Procedures/Functions
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+
+
+   cKeyPressed: Boolean;
+     Returns true if user or local user pressed a key
+
+   inKey: Char;
+     Reads one character locally/remotely and returns key pressed
+
+   pause;
+     Displays PauseStr variable, then waits for keypress
+
+   instr(def: String; Len: Byte;  InputBG: Boolean): String;
+     Advanced input;  returns string user/sysop types
+
+         def     : Default string, previous value
+
+         Len     : Maximum characters in string
+
+         InputBG : If "true", XDoor will use the set Input background color
+                   (which is "inputColor", see variables)
+
+
+   yesNo(def: Boolean): Boolean;
+     Activates a yes/no horizontal lightbar
+
+         def     : Default value.  If set to "true", then the yesNo proc
+                   will start out with "Yes" selected; if set to "false"
+                   then it will start out with "No" selected.
+
+         returns : yesNo returns TRUE if they  chose YES,  and  FALSE if
+                   they chose NO.
+
+         note    : See variables section on changing the Yes/No Strings.
+
+
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+   Other miscellaneous procedures/functions
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+
+
+   CurFG: Byte;
+     Returns current foreground color
+
+   CurBG: Byte;
+     Returns current background color
+
+   initDoor;
+     Initializes door driver, reads .CFG file, opens com port, etc
+
+   timeLeft: Word;
+     Returns amount of time (in minutes) the user has left online
+
+   statusBar(enable: Boolean);
+     Enables/Disables status bar at the bottom of the screen
+
+   hungup: Boolean;
+     Returns true if no carrier is detected (connection lost)
+
+   beep;
+     Makes a 'beep' sound on both local and remote ends
+
+   trimFile(fName: String; numLines: Integer);
+     Trims a text file to specified number of lines
+
+         fName   : Text file name to trim
+
+         numLines: Number of lines to trim file to.  trimFile will
+                   remove lines starting at the TOP of the file to
+                   trim it to the specified  length.   If the file
+                   has less lines than 'numLines', no changes will
+                   be made.
+
+         note    : This procedure  is EXTREMELY useful  for things
+                   like oneliners, walls, etc.  With this, you can
+                   simply append the line to  the file,  then trim
+                   it down one less line.   Look at "ONELINER.ZIP"
+                   in the XDoor archive for a good example.
+
+   
+   logWrite(s: String);
+     Writes a string to the door log file, and creates it if necessary.
+
+
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+   Configurable String/Integer/Boolean Variables
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+
+   These global variables can be changed in your code.  Many variables
+   should be changed *BEFORE* calling "InitDoor;", such as doorName,
+   cfgName, and any other variable that is required for initialization
+
+
+   cfgName: String[20];
+     Configuration file name, defaults to DOOR.CFG
+
+   doorName: String[30];
+     Door name, this is displayed on the status bar
+
+   sysopChatFG: Byte;
+     Chat mode foreground color for the SysOp; default 15 (bright white)
+
+   sysopChatBG: Byte;
+     Chat mode background color for the SysOp; default 0 (black)
+
+   userChatFG: Byte;
+     Chat mode foreground color for the user; default 7 (grey)
+
+   userChatBG: Byte;
+     Chat mode background color for the user; default 0 (black)
+
+   statusBG: Byte;
+     Status bar background color; default 1 (dark blue)
+
+   statusDark: Byte;
+     Color for dark colored info on status bar;  default 8 (dark grey)
+
+   statusNormal: Byte;
+     Color for normal colored info on status bar; default 7 (grey)
+
+   statusBright: Byte;
+     Color for bright colored info on status bar; default 15 (bright white)
+
+   useStatus: Boolean;
+     Use status bar?  Set this *BEFORE* calling InitDoor;  default true
+
+   PauseStr: String[40];
+     Pause display string; shown when "pause;" is called
+
+   moreStr: String[40];
+     String displayed for the "more?" prompt during file display
+
+   inputColor: Byte;
+     Background color for input;  default 7 (grey)
+
+   noTimeStr: String[60];
+     This string is shown when the user has ran out of time
+
+   inactiveTime: Integer;
+     Number of minutes user is allowed to idle, before inactive timeout
+
+   inactiveStr: String[60];
+     This string is shown when the user is inactive for too long
+
+   kickStr: String[60];
+     Message sent to user when he/she is kicked out of the door (alt-k)
+
+   yesStr: String[30];
+     "YES/no" lightbar string.  Displayed when YES is highlited
+
+   noStr: String[30];
+     "yes/NO" lightbar string.  Displayed when NO is highlited
+
+   dropType: Byte;
+     Door Drop file type;  1, 2, or 3;  taken from configuration file
+
+   dropPath: String;
+     Door Drop file path;  taken from configuration file
+
+
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+   System Variables
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+
+   System variables are set by XDoor and should not be altered.  Do
+   not attempt to change any of these values, or unexpected results
+   may occur.
+
+
+   sysopName: String[30];
+     Sysop Name, taken from configuration file
+
+   bbsName: String[40];
+     BBS System name, taken from configuration file
+
+   local: Boolean;
+     Returns true if in local mode
+
+   keyLocal: Boolean;
+     Returns true if the last key read was pressed on the local keyboard
+
+   node: Byte;
+     Node number read from command line (see command line info)
+
+   userNumber: Integer;
+     Online user's account #.  Note: Always "0" if DORINFO#.DEF is used
+
+   userHandle: String[30];
+     Online user's primary name/alias, taken from drop file
+
+   userReal: String[30];
+     Online user's alternate/real name, taken from drop file
+
+   userLocation: String[30];
+     User's city, state;  or location
+
+   userSL: Word;
+     User's security level, taken from drop file
+
+   userBaud: LongInt;
+     Baud rate user online is connected at
+
+   lockedBaud: LongInt;
+     Locked Baud Rate
+
+   userPhone: String[14];
+     User's phone number, taken from drop file
+
+   userBday: String[8];
+     User's date of birth, taken from drop file
+
+   hitUp: Boolean;
+     Was the last key pressed the up arrow (works local AND remote).
+     This makes reading arrow keys EXTREMELY easy.  XDoor does all
+     the escape code checking for you.  example:
+
+      c := Inkey;
+      if hitUp then out('You pressed the up arrow!');
+
+   hitDown: Boolean;
+     Returns true if they hit the down arrow key
+
+   hitLeft: Boolean;
+     Returns true if they hit the left arrow key
+
+   hitRight: Boolean;
+     Returns true if they hit the right arrow key
+
+   hitHome: Boolean;
+     Returns true if they hit the HOME key
+
+   hitEnd: Boolean;
+     Returns true if they hit the END key
+
+   hitDel: Boolean;
+     Returns true if they hit the DELETE key
+
+
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+   Online Sysop Keys
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+
+   Online Sysop Keys are keys that the SysOp can press while the user
+   is online to perform various functions.
+
+   ALT-C : Initialize chat mode, press ALT-C to get out of chat mode
+
+   ALT-K : Kicks user out of the door, and returns him to the BBS
+
+   ALT-H : Hangs up on user
+
+   ALT-Z : Displays Online Sysop Key Help on the Status Bar
+
+
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+   Command Line Parameter Help
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+
+   The following are valid command line parameters that can be passed
+   to an XDoor Door.
+
+     /L               : local mode (no modem i/o)
+     /N<node #>       : load node <node #>
+     /P<path>         : specify drop file path
+     /?               : show command line help screen
+
+   Note: Both "/" *AND* "-" will work as command keys.
+         (ie, "DOOR.EXE /L" and "DOOR.EXE -L" will both work)
+
+
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+   Other information - XMISC
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+
+   MANY more functions/procedures have been included in this archive.
+   Take a look at the XMISC unit, it's undocumented,  but it contains
+   string conversion  functions,  string manipulation functions,  and
+   numerous useful  functions.   To use it,  just add "XMISC" to your
+   uses statement.
+
+   In addition, some sample doors have been included.  Take a look at
+   LIGHTBAR.PAS - it has a simple example for a lightbar in XDOOR.
+   (a lightbar is an arrow-key driven menu)
+
+   I also included a sample door that demonstrates how to use XDoor.
+
+
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+   VIVID#.SYS Drop File - What is it?
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+
+   The XTreme DoorKit supports a new door dropfile type.  It isn't
+   used by  other doorkits  right now.  VIVID#.SYS is used for the
+   Vivid  Bulletin  Board  System.   Vivid is  currently  still in
+   development, and is also written by me (nd).
+
+   Update (11/10/99): Yes, a lot of time has passed, and still no
+                      public release.  I apologize.  However, I
+                      still am working on it, really.
+
+   Here are the specs for the VIVID#.SYS drop file (# = node number)
+
+  ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+    Line #  Description           Example             Notes
+  ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+     1      User Account #        1                   Numeric Value
+     2      Primary Name          natedogg            Handle/Real Name
+     3      Alternate Name        Nate Case           Handle/Real Name
+     4      Location              Vadnais Heights, MN
+     5      Graphics Code         1                   0=none 1=ans 2=rip
+     6      Minutes left on BBS   45                  Numeric Value
+     7      Security Level        255                 Numeric Value
+     8      BBS Name              Violent Image
+     9      Sysop Name            SysOp
+    10      Com Port              2                   0 for local
+    11      Baud Rate             14400               0 for local
+    12      Locked Baud Rate      38400               0 for unlocked
+    13      User Phone #          (912)923-0216
+    14      User Birthdate        04/02/81
+  ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+
+
+   The VIVID#.SYS drop file as you can see, is very simple and has
+   the most important variables that doors  really need.   It also
+   supports multiple nodes (VIVIDx.SYS). And unlike, DORINFO#.DEF,
+   it doesn't have a limit of only 9 nodes.
+
+
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+   Pipe Codes - Syntax
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+
+   Pipe Codes are used by many BBS softwares, and they make changing
+   colors a lot easier while coding.
+
+   Syntax: |xx , where XX is a color code.
+
+   Valid codes are numbers 00-23 (16-23 are background colors).
+
+   To change backgrounds easier, you can also use |B#, where # is
+   the background color.  (ex: |B2This is in a green background)
+
+   Colors:
+
+   00: Black           08: Dark Grey         16: Black Background   (B0)
+   01: Dark Blue       09: Bright Blue       17: Blue Background    (B1)
+   02: Dark Green      10: Bright Green      18: Green Background   (B2)
+   03: Dark Cyan       11: Bright Cyan       19: Cyan Background    (B3)
+   04: Dark Red        12: Bright Red        20: Red Background     (B4)
+   05: Dark Magenta    13: Bright Magenta    21: Magenta Background (B5)
+   06: Brown           14: Bright Yellow     22: Brown Background   (B6)
+   07: Grey            15: Bright White      23: Grey background    (B7)
+
+
+   Note: The "out" and "outln" functions will not parse pipe codes,
+         use "cout" and "coutln" to write with pipe codes.
+         (ex: coutln('|01H|09ello |01W|09orld|08.'); )
+
+
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+   Frequently Asked Questions
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+
+
+   1)  Question : How much does the Xtreme Doorkit cost for registration?
+
+       Answer   : Nothing, XDoor is completely free.
+
+   2)  Question : Where can I obtain the Xtreme Doorkit source code?
+
+       Answer   : It's included in the XDoor archive, silly.
+
+   3)  Question : Your door kit sucks!  What were you thinking?!
+
+       Answer   : Don't use it.
+
+   4)  Question : Where can I find Xtreme Doorkit updates?
+
+       Answer   : You can always find the latest version at
+                  ftp://demonic.kracked.com (Official Demonic FTP Site)
+
+   5)  Question : I have a strange fetish for livestock animals, will
+                  XDoor cure me?
+
+       Answer   : Yes, the Xtreme Doorkit is very magical.
+
+   6)  Question : When is Vivid coming out?
+
+       Answer   : I don't know, things have been moving slower than
+                  anticipated.  As of now it's about 75% done.  The
+                  [rarely updated] homepage is at http://demonic.net/vivid
+       
+   6)  Question : How can I contact the author of XDoor?
+
+       Answer   : Read the next section entitled "Contacting".
+
+
+
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+   Contacting
+ù-ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-ù
+
+   If you have ANY suggestions, comments, bug reports, questions, or
+   anything else regarding Xtreme Doorkit, PLEASE let me know.
+
+   Nate Case [natedogg aka nd]
+     email: nd@kracked.com
+
+   Demonic BBS Productions
+     http://demonic.net
+
+   Jack Phlash (Demonic President)
+     jp@xtn.net
